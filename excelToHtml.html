@@ -1218,34 +1218,30 @@
   <script type="text/javascript">
     $(document).ready(function () {
       $("#input").on("change", function (e) {
-        var a = document.getElementById("input");
-        var b = document.getElementById("fileName");
-        var file = e.target.files[0];
-        // input canceled, return
+        let a = document.getElementById("input");
+        let b = document.getElementById("fileName");
+        let file = e.target.files[0];
         if (!file) {
           return;
         }
-
-        var FR = new FileReader();
+        let FR = new FileReader();
         FR.onload = function (e) {
-          var data = new Uint8Array(e.target.result);
-          var workbook = XLSX.read(data, { type: "array" });
-          var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+          let data = new Uint8Array(e.target.result);
+          let workbook = XLSX.read(data, { type: "array" });
+          let firstSheet = workbook.Sheets[workbook.SheetNames[0]];
           a.innerHTML = firstSheet;
           b.innerHTML = a.value;
-          var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-          var output = document.getElementById("result");
-          //output.innerHTML = JSON.stringify(result, null, 2);
-          var length = result[0].length;
-          var goodArr = result[0];
-          var T = {};
-          for (var k = 1; k < result.length; k++) {
-            var arr = result[k];
-            var hash = {};
-            for (var i = 0; i < length; i++) {
-              var current = goodArr[i];
-              var str = current.replace(/-/g, "_");
-              var ref = arr[i];
+          let result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+          let length = result[0].length;
+          let goodArr = result[0];
+          let T = {};
+          for (let k = 1; k < result.length; k++) {
+            let arr = result[k];
+            let hash = {};
+            for (let i = 0; i < length; i++) {
+              let current = goodArr[i];
+              let str = current.replace(/-/g, "_");
+              let ref = arr[i];
               hash[str] = ref;
             }
             T[k] = hash;
@@ -1255,10 +1251,10 @@
         };
         FR.readAsArrayBuffer(file);
       });
-      //<a onclick="this.href='data:text/html;charset=UTF-8,'+encodeURIComponent(document.documentElement.outerHTML)" href="#" download="page.html">Download</a>
+
       function render($data, T) {
-        for (var i = 1; i < $data.length; i++) {
-          var arr = T[i];
+        for (let i = 1; i < $data.length; i++) {
+          let arr = T[i];
           $template = $("#template").clone();
           $template.attr("id", arr.order_id);
           $template.removeAttr("hidden");
@@ -1275,7 +1271,7 @@
           $template.appendTo("#row_body");
           $template.find(".download-button").attr("tmp-id");
           $template.find(".download-button").on("click", function () {
-            var fName = $(this)
+            let fName = $(this)
               .parent()
               .parent()
               .find(".delivery_buyer_name")
@@ -1288,12 +1284,11 @@
           });
         }
       }
-      function downloadInnerHtml(filename, elId, mimeType) {
-        console.log(elId);
-        var elHtml = document.getElementById(elId).innerHTML;
-        var link = document.createElement("a");
-        mimeType = mimeType || "text/plain";
 
+      function downloadInnerHtml(filename, elId, mimeType) {
+        let elHtml = document.getElementById(elId).innerHTML;
+        let link = document.createElement("a");
+        mimeType = mimeType || "text/plain";
         link.setAttribute("download", filename);
         link.setAttribute(
           "href",
