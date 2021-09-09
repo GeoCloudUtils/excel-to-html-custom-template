@@ -1,0 +1,550 @@
+<html lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="Excel to Html Convertor" />
+<meta name="author" content="Marketify" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Excel to Html Convertor</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<!-- MDB -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
+
+<body>
+  <div class="w-50 mx-auto">
+    <div class="card mt-5">
+      <div class="card-body">
+        <h5 class="card-title">Excel to Html Convertor</h5>
+        <input type="file" class="btn btn-primary" id="input" accept=".xls,.xlsx,.ods">
+        <p class="card-text" id="fileName" index = "">
+
+        </p>
+        <pre id="result"></pre>
+      </div>
+    </div>
+    <div class="w-100" id = "mainBody">
+
+    </div>
+  </div>
+
+</body>
+
+
+<style>
+  .content {
+    align-content: center;
+  }
+
+  .myButton {
+    box-shadow: 0px 10px 14px -7px #276873;
+    background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+    background-color: #599bb3;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 13px 32px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+  }
+
+  .myButton:hover {
+    background: linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color: #408c99;
+  }
+
+  .myButton:active {
+    position: relative;
+    top: 1px;
+  }
+</style>
+
+
+<div class="main-template" id = "template" hidden>
+  <p align="center"
+    style="color: rgb(34, 34, 34); font-family: Arial, Helvetica, sans-serif; font-size: small; background-color: rgb(255, 255, 255);">
+    &nbsp;</p>
+  <div align="center" class="gmail_quote" dir="ltr"
+    style="color: rgb(34, 34, 34); font-family: Arial, Helvetica, sans-serif; font-size: small; background-color: rgb(255, 255, 255);">
+    <table height="1593" style="font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;" width="628">
+      <tbody>
+        <tr>
+          <td style="margin: 0px; font-size: 13px; vertical-align: top; line-height: 18px;" width="689">
+            <table height="84" style="border-collapse: collapse;" width="622">
+              <tbody>
+                <tr>
+                  <td rowspan="2"
+                    style="margin: 0px; width: 115px; vertical-align: top; padding: 18px 0px 0px; line-height: 18px;">
+                    <a data-saferedirecturl="https://www.google.com/url?q=http://amazon.de/&amp;source=gmail&amp;ust=1619169715353000&amp;usg=AFQjCNGpUuPoHxmEzBdk_xbgQBPQy7Guvg"
+                      href="http://amazon.de/"
+                      style="color: rgb(0, 102, 153); line-height: 18px; text-decoration-line: none;" target="_blank"
+                      title="Besuchen Sie Amazon.de"><img alt="Amazon" class="CToWUd"
+                        src="https://ci4.googleusercontent.com/proxy/gVwrVWzte0pMOM7xQFMthFzh93gCA9Jkkq-xcpYvBCk0pdk-HYWFqZkKRiKAstz7UE6rxa_Vo53AByN0H_W82jrPbzB_UeCQvRKntApbQI5LXOe4mvOVzXBj-2BRWwFraN6gTzTxKae5OA=s0-d-e1-ft#http://g-ec2.images-amazon.com/images/G/03/x-locale/common/amazon-logo._V175169556_.gif"
+                        style="border-width: 0px; border-style: initial; border-color: initial; width: 115px;" /></a>
+                  </td>
+                  <td
+                    style="margin: 0px; vertical-align: top; white-space: nowrap; border-bottom-style: solid; padding: 5px 0px; border-bottom-color: rgb(204, 204, 204); line-height: 18px;">
+                    &nbsp;</td>
+                  <td
+                    style="margin: 0px; width: 357px; vertical-align: top; white-space: nowrap; border-bottom-style: solid; padding: 5px 0px; border-bottom-color: rgb(204, 204, 204); line-height: 18px;">
+                    <span style="color: rgb(11, 83, 148);">Meine Bestellungen</span>
+                  </td>
+                  <td
+                    style="margin: 0px; vertical-align: top; white-space: nowrap; border-bottom-style: solid; padding: 5px 0px; border-bottom-color: rgb(204, 204, 204); line-height: 18px;">
+                    <span style="font-size: 15px; color: rgb(204, 204, 204);">&nbsp;|&nbsp;</span>&nbsp;<span
+                      style="color: rgb(11, 83, 148);">Mein Konto</span>&nbsp;<span
+                      style="font-size: 15px; color: rgb(204, 204, 204);">&nbsp;|&nbsp;</span>&nbsp;<span
+                      style="color: rgb(11, 83, 148);">Amazon.de</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3"
+                    style="margin: 0px; vertical-align: top; padding: 7px 0px 5px; text-align: right; line-height: 18px;">
+                    <h2 style="font-size: 20px; font-weight: normal; padding: 0px; margin: 0px; line-height: 24px;">
+                      Bestellbest&auml;tigung</h2>
+                    <p>
+                      Bestellung: #<span style="color: rgb(11, 83, 148);">650-6617901-14316528</span></p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td height="142" style="margin: 0px; font-size: 13px; vertical-align: top; line-height: 18px;">
+            <table height="140" style="width: 640px; border-collapse: collapse;">
+              <tbody>
+                <tr>
+                  <td height="134" style="margin: 0px; vertical-align: top; line-height: 18px;">
+                    <h3 style="font-size: 18px; font-weight: normal; color: rgb(204, 102, 0); margin: 15px 0px 0px;">
+                      Hallo Thorsten Bohnenstengel ,</h3>
+                    <p style="padding: 0px; margin: 5px 0px 0px;">
+                      <font size="2">Vielen Dank f&uuml;r Ihre&nbsp;</font><span
+                        style="font-size: small; color: rgb(11, 83, 148);">Amazon.de Marketplace</span>
+                      <font size="2">&nbsp;Bestellung bei</font>&nbsp;<b><span
+                          style="color: rgb(180, 95, 6);">Carmen</span></b>.&nbsp;Wir werden an den verk&auml;ufer
+                      aufmerksam, um ein Produkt zu versenden, sobald Ihre Zahlung eingegangen ist.
+                    </p>
+                    <p style="padding: 0px; margin: 5px 0px 0px;">
+                      Sie finden das voraussichtliche Lieferdatum weiter unten.</p>
+                    <div style="line-height: 18px;">
+                      &nbsp;</div>
+                    <div style="line-height: 18px;">
+                      <span style="font-size: small;">&nbsp; &nbsp;&nbsp;</span>&nbsp;<b>Status:</b>&nbsp;<span
+                        style="color: rgb(204, 102, 0);">Ausstehende&nbsp;Zahlung<wbr />!</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="margin: 0px; font-size: 13px; vertical-align: top; line-height: 18px;">
+            <table style="width: 640px; border-collapse: collapse;">
+              <tbody>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="margin: 0px; font-size: 13px; vertical-align: top; line-height: 18px;">
+            <table height="198"
+              id="m_2522329700460587210m_2659372416860157295m_-9060140580585855168gmail-m_-4575491053711860105gmail-m_4121290010292444950gmail-m_2303112831028470534gmail-m_-8356910123712857881gmail-m_-3011911368846802026gmail-m_1595979356945445376m_5447089565703972597gmail-m_7515441238927900731m_-1336867567575589275m_8078127029716993071m_5586158354685324701m_-3831380725299396776m_1759325311810547542m_-8402992395732049993m_1708273362123406134m_-5788659617900094641m_8242097018018384462m_-361266310677763275m_5726210905492395277m_-7169310425313650147m_7124566589423581106m_5992057910496733843m_6101224800840765752m_-5917383873267356880m_7857718914686845147m_-1389131775771994542m_-3717745856334918853m_609905445542835787m_6703043997724747591m_-7868861642532417824m_2879170640592236489gmail-m_-885825177604459449m_-2044820929852935039m_415223096038860975m_-2116581243026291367m_7217628359734880045m_-3796261295693334581m_-5305524219906889715m_-6290539384417498939m_733789811124278344m_2761220526572080735m_-2928327779699848255m_-2914063821820928881m_-3200285166577587256m_2040626603592727069m_1489971866627696930m_-3479427035897201957m_-2748583971960691170m_-830107185791954282m_-1253330489060604336m_4102163070301518997m_-895621077975711754m_-6272867500048122641m_-3092870468969169706m_1838913413675947605m_-5431263678152904699m_9152490852223076102m_-1325630780128841159m_6814609040044089530m_1236627574444841108m_970721283540379842m_-6915435101266162561m_3476500118607902371m_-7708600297370066847gmail-m_4675687882412528196gmail-m_3779912721886641776m_-5235744695813893180m_-2657142778356405087m_3582464864130026362m_1014759101909505864m_4426971052780671896m_2967084113749033576gmail-m_2875486919525641350m_-5363071534660433043m_-3136488050996443098m_-3843622008880365134m_3485243373508677740m_9179652976768911528m_-1440154054886661530m_714636038814356169m_8112242934853942616m_-5204238990842825162m_-2475743698068792542m_4222481042802766931gmail-m_1014030316531058826gmail-m_-9071000888298862964gmail-m_-7127216111390268442gmail-m_5516203518137005750gmail-m_-9002009976064779170m_-4515476184239205239m_3170674951586450319m_-3699854818684515315m_-649210530105952088m_-3152088565333417964m_-6080350915308550366m_-1794479680066379431m_-9079884728923571471m_8063139040834969470m_2959779365692728594gmail-m_-5348261618776152123m_7020060109210007361gmail-m_-8374291217460862527gmail-m_-4084601093333689116m_-7329303743659344512m_2920873673235539593m_-7384227661019969035gmail-m_-1460553026383734308gmail-m_-3045956299482129165gmail-m_8719926294165022051m_331997306750432406m_8460661695121094264m_6750081456088603141gmail-m_6970781012685933570m_-1165827786224995000m_-7498773464738293444m_-426618186804912432m_4760825833587485352m_983663644623611752m_1529760553915203483m_5850191788859919580m_-1745369209056219386m_7616362569890709147m_-6660069471386297823m_-1889599340114646195m_9153863731785772659m_3991971512811621334m_4061962729614707552m_-2855157939318730299m_-8132039901798584848m_4525696472945120985gmail-m_-2999245370093826283m_-2134519925291787622m_-2017089197949484765m_1596259215551422425m_3331686655661799062m_7243381804163534708gmail-m_5572347172898317535m_3561279437693277129gmail-m_-2384150846246344678gmail-m_3578572584480633354gmail-m_-4471349044616053345gmail-m_-8905699015092413986gmail-m_6196649020657315082gmail-m_2157097947381666309gmail-m_7378147947697638682gmail-m_1461237506788168862gmail-m_1279669437682035715gmail-m_-6012001758666750766gmail-m_480640820400685530gmail-m_8375335266140384605gmail-m_-3177386085571847584gmail-m_152367441108143433gmail-m_7282012755918667911gmail-m_-3416074825510789520gmail-m_-3860207100318625954gmail-m_1016190135376275436gmail-m_-1803293336053405196gmail-m_5002114014557145935gmail-m_-492298288224541729gmail-m_5523557539691356225gmail-m_-5803208009416808150gmail-m_5621489903335519132gmail-m_-5788113100063532306gmail-m_171430971073991851gmail-m_4525257690364281081gmail-m_2859377811998156753m_8316432560528606501gmail-m_3276346138788973743gmail-m_3945036482236932941gmail-m_-4249420053237502031gmail-m_-1695198558901871592gmail-m_-6388984796162741708gmail-m_-1004086342922755624gmail-m_-9016942505209469820gmail-m_8631261833261546153gmail-m_3219915068740290931gmail-m_-9156619021752641264gmail-m_519314053499257287gmail-m_8772919950173261848gmail-m_5399180699197461167gmail-m_2419712663887457986gmail-m_6881312776889184148gmail-m_3195010702836105274gmail-m_-3269425636290998735gmail-m_-2903414019191053865gmail-m_-5070906283748169665gmail-m_-3721712482455135070gmail-m_-7697910647974350165gmail-m_-3821428672303525334gmail-m_-1194197531298949175gmail-m_-4007315567785932908gmail-m_684894640192123812gmail-m_4676160492677601855gmail-m_49383008951933301gmail-m_-5041416459374723896gmail-m_1521312171275636803gmail-m_-5042289186888422836gmail-m_-4369938907690857266gmail-m_-4678401812300325169gmail-m_-4900734571326649492gmail-m_3952294860057940143gmail-m_8453261316320051414gmail-m_8219499316091725172gmail-m_-3613484065220430580gmail-m_3890189474734958656gmail-m_2369736254615115394gmail-m_-572745318245215587gmail-m_-3814794175507384407gmail-m_-1317556936002143742gmail-m_-9127049081808246713gmail-m_-8345574216536091588gmail-m_2361293389252645917gmail-m_6392013027256679240gmail-m_7011357802145270482gmail-m_5407469739731719661gmail-m_4787401333125547707gmail-m_-3530591454484792318gmail-m_-1080396597172801020gmail-m_664585086502655380gmail-m_7977242150559651278gmail-m_-9188163432888675520gmail-m_8396282355166966032gmail-m_4439702993196565656gmail-m_8811944702732379211gmail-criticalInfo"
+              style="border-top: 3px solid rgb(45, 55, 65); border-collapse: collapse;" width="623">
+              <tbody>
+                <tr>
+                  <td
+                    style="margin: 0px; font-size: 14px; width: 276px; vertical-align: top; padding: 11px 18px 18px; line-height: 18px; background-color: rgb(239, 239, 239);"
+                    width="46%">
+                    <p style="margin: 2px 0px 9px;">
+                      <span style="color: rgb(102, 102, 102);">Zustellung:</span><br />
+                      <b style="color: rgb(0, 153, 0);"><span lang="de">Donnerstag</span>&nbsp;, 22. April -<br />
+                        Freitag, 23. April</b>
+                    </p>
+                    <p style="margin: 2px 0px 9px;">
+                      <span style="color: rgb(102, 102, 102);">Versandart:</span><br />
+                      <b>Standardversand</b>
+                    </p>
+                    <p>
+                      <img alt="Bestelldetails" border="0" class="CToWUd"
+                        id="m_2522329700460587210m_2659372416860157295m_-9060140580585855168gmail-m_-4575491053711860105gmail-m_4121290010292444950gmail-m_2303112831028470534gmail-m_-8356910123712857881gmail-m_-3011911368846802026gmail-m_1595979356945445376m_5447089565703972597gmail-m_7515441238927900731m_-1336867567575589275m_8078127029716993071m_5586158354685324701m_-3831380725299396776m_1759325311810547542m_-8402992395732049993m_1708273362123406134m_-5788659617900094641m_8242097018018384462m_-361266310677763275m_5726210905492395277m_-7169310425313650147m_7124566589423581106m_5992057910496733843m_6101224800840765752m_-5917383873267356880m_7857718914686845147m_-1389131775771994542m_-3717745856334918853m_609905445542835787m_6703043997724747591m_-7868861642532417824m_2879170640592236489gmail-m_-885825177604459449m_-2044820929852935039m_415223096038860975m_-2116581243026291367m_7217628359734880045m_-3796261295693334581m_-5305524219906889715m_-6290539384417498939m_733789811124278344m_2761220526572080735m_-2928327779699848255m_-2914063821820928881m_-3200285166577587256m_2040626603592727069m_1489971866627696930m_-3479427035897201957m_-2748583971960691170m_-830107185791954282m_-1253330489060604336m_4102163070301518997m_-895621077975711754m_-6272867500048122641m_-3092870468969169706m_1838913413675947605m_-5431263678152904699m_9152490852223076102m_-1325630780128841159m_6814609040044089530m_1236627574444841108m_970721283540379842m_-6915435101266162561m_3476500118607902371m_-7708600297370066847gmail-m_4675687882412528196gmail-m_3779912721886641776m_-5235744695813893180m_-2657142778356405087m_3582464864130026362m_1014759101909505864m_4426971052780671896m_2967084113749033576gmail-m_2875486919525641350m_-5363071534660433043m_-3136488050996443098m_-3843622008880365134m_3485243373508677740m_9179652976768911528m_-1440154054886661530m_714636038814356169m_8112242934853942616m_-5204238990842825162m_-2475743698068792542m_4222481042802766931gmail-m_1014030316531058826gmail-m_-9071000888298862964gmail-m_-7127216111390268442gmail-m_5516203518137005750gmail-m_-9002009976064779170m_-4515476184239205239m_3170674951586450319m_-3699854818684515315m_-649210530105952088m_-3152088565333417964m_-6080350915308550366m_-1794479680066379431m_-9079884728923571471m_8063139040834969470m_2959779365692728594gmail-m_-5348261618776152123m_7020060109210007361gmail-m_-8374291217460862527gmail-m_-4084601093333689116m_-7329303743659344512m_2920873673235539593m_-7384227661019969035gmail-m_-1460553026383734308gmail-m_-3045956299482129165gmail-m_8719926294165022051m_331997306750432406m_8460661695121094264m_6750081456088603141gmail-m_6970781012685933570m_-1165827786224995000m_-7498773464738293444m_-426618186804912432m_4760825833587485352m_983663644623611752m_1529760553915203483m_5850191788859919580m_-1745369209056219386m_7616362569890709147m_-6660069471386297823m_-1889599340114646195m_9153863731785772659m_3991971512811621334m_4061962729614707552m_-2855157939318730299m_-8132039901798584848m_4525696472945120985gmail-m_-2999245370093826283m_-2134519925291787622m_-2017089197949484765m_1596259215551422425m_3331686655661799062m_7243381804163534708gmail-m_5572347172898317535m_3561279437693277129gmail-m_-2384150846246344678gmail-m_3578572584480633354gmail-m_-4471349044616053345gmail-m_-8905699015092413986gmail-m_6196649020657315082gmail-m_2157097947381666309gmail-m_7378147947697638682gmail-m_1461237506788168862gmail-m_1279669437682035715gmail-m_-6012001758666750766gmail-m_480640820400685530gmail-m_8375335266140384605gmail-m_-3177386085571847584gmail-m_152367441108143433gmail-m_7282012755918667911gmail-m_-3416074825510789520gmail-m_-3860207100318625954gmail-m_1016190135376275436gmail-m_-1803293336053405196gmail-m_5002114014557145935gmail-m_-492298288224541729gmail-m_5523557539691356225gmail-m_-5803208009416808150gmail-m_5621489903335519132gmail-m_-5788113100063532306gmail-m_171430971073991851gmail-m_4525257690364281081gmail-m_2859377811998156753m_8316432560528606501gmail-m_3276346138788973743gmail-m_3945036482236932941gmail-m_-4249420053237502031gmail-m_-1695198558901871592gmail-m_-6388984796162741708gmail-m_-1004086342922755624gmail-m_-9016942505209469820gmail-m_8631261833261546153gmail-m_3219915068740290931gmail-m_-9156619021752641264gmail-m_519314053499257287gmail-m_8772919950173261848gmail-m_5399180699197461167gmail-m_2419712663887457986gmail-m_6881312776889184148gmail-m_3195010702836105274gmail-m_-3269425636290998735gmail-m_-2903414019191053865gmail-m_-5070906283748169665gmail-m_-3721712482455135070gmail-m_-7697910647974350165gmail-m_-3821428672303525334gmail-m_-1194197531298949175gmail-m_-4007315567785932908gmail-m_684894640192123812gmail-m_4676160492677601855gmail-m_49383008951933301gmail-m_-5041416459374723896gmail-m_1521312171275636803gmail-m_-5042289186888422836gmail-m_-4369938907690857266gmail-m_-4678401812300325169gmail-m_-4900734571326649492gmail-m_3952294860057940143gmail-m_8453261316320051414gmail-m_8219499316091725172gmail-m_-3613484065220430580gmail-m_3890189474734958656gmail-m_2369736254615115394gmail-m_-572745318245215587gmail-m_-3814794175507384407gmail-m_-1317556936002143742gmail-m_-9127049081808246713gmail-m_-8345574216536091588gmail-m_2361293389252645917gmail-m_6392013027256679240gmail-m_7011357802145270482gmail-m_5407469739731719661gmail-m_4787401333125547707gmail-m_-3530591454484792318gmail-m_-1080396597172801020gmail-m_664585086502655380gmail-m_7977242150559651278gmail-m_-9188163432888675520gmail-m_8396282355166966032gmail-m_4439702993196565656gmail-m_8811944702732379211gmail-yourOrders"
+                        src="https://ci6.googleusercontent.com/proxy/k-91GLklegWb49vJMxQ-kMWW1d1u4SpCJm5eeOc3YOlOOy93udxSSu3TXzagXpcsjXgwwkL525vXn_x3G5UO_2xBtwgIiUnDaAQaStH1-AIQlJaJwQdVu14I-ZMDQn4xawHXXNUB_CE1UKasJINWAvA=s0-d-e1-ft#http://g-ec2.images-amazon.com/images/G/03/x-locale/cs/te/button-orderdetails._V383582954_.png"
+                        style="border-width: 0px; border-style: initial; border-color: initial;" />
+                    </p>
+                  </td>
+                  <td
+                    style="margin: 0px; font-size: 14px; width: 275px; vertical-align: top; padding: 11px 18px 18px; line-height: 18px; background-color: rgb(239, 239, 239);"
+                    width="54%">
+                    <p style="margin: 2px 0px 9px;">
+                      <span style="color: rgb(102, 102, 102);">Die Bestellung geht an:</span>
+                    </p>
+                    <div>
+                      <strong>Thorsten Bohnenstengel</strong>
+                    </div>
+                    <div>
+                      <strong>Trierer Str. 173a</strong>
+                    </div>
+                    <div>
+                      <strong>56072 Koblenz</strong>
+                    </div>
+                    <p style="margin: 2px 0px 9px;">
+                      <b>Tel :&nbsp;</b><strong>+49 17660407897</strong>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2"
+                    style="margin: 0px; font-size: 14px; width: 623px; vertical-align: top; padding: 10px 0px 0px; line-height: 18px;">
+                    &nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td height="35"
+            style="margin: 0px; font-size: 13px; vertical-align: top; border-bottom-style: solid; border-bottom-color: rgb(204, 204, 204); line-height: 18px;">
+            <h3 style="font-size: 18px; font-weight: normal; color: rgb(204, 102, 0); margin: 15px 0px 0px;">
+              Einzelheiten Ihrer Bestellung</h3>
+          </td>
+        </tr>
+        <tr>
+          <td style="margin: 0px; font-size: 13px; vertical-align: top; line-height: 18px;">
+            <table style="width: 640px; border-collapse: collapse;">
+              <tbody>
+                <tr>
+                  <td style="margin: 0px; vertical-align: top; line-height: 18px;">
+                    Bestellung: #<span style="color: rgb(11, 83, 148);">650-6617901-14316528</span><br />
+                    <span style="font-size: 12px;">Zustand:&nbsp;</span><span style="color: rgb(11, 83, 148);">Neu
+                      &ndash; Originalverpackung - Garantie</span><br style="font-size: 12px;" />
+                    <span style="font-size: 12px;">Versand &amp; Versicherung:&nbsp;</span><span
+                      style="color: rgb(11, 83, 148);">Durch den verk&auml;ufer angeboten</span><br
+                      style="font-size: 12px;" />
+                    <span style="font-size: 12px;">&Uuml;berpr&uuml;fungszeit:&nbsp;</span><span
+                      style="color: rgb(11, 83, 148);">14 Tage</span><br />
+                    <span style="font-size: 12px; color: rgb(102, 102, 102);">Aufgegeben am 22 April 2021</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="margin: 0px; font-size: 13px; vertical-align: top; padding-left: 32px; line-height: 18px;">
+            <table style="width: 578px; border-collapse: collapse;">
+              <tbody>
+                <tr>
+                  <td height="145"
+                    style="margin: 0px; width: 150px; vertical-align: top; padding: 16px 0px 10px; line-height: 18px;">
+                    <img class="CToWUd a6T"
+                      src="https://ci5.googleusercontent.com/proxy/XnO0YnCyaj0p6sPMrW0Aqsfo7OGl4O27ARs30nos0C00Oj_rxZdHtT5Russ3CXjBdgz4PVGmNlNyL0hiUkYufIP3itvSGdGXHW6fVM3F=s0-d-e1-ft#https://i.ebayimg.com/images/g/ev4AAOSwAntgetAq/s-l1600.jpg"
+                      style="cursor: pointer; outline: 0px; height: 124px; width: 165px; margin-right: 0px;"
+                      tabindex="0" />
+                  </td>
+                  <td style="margin: 0px; vertical-align: top; padding: 10px 0px 0px; line-height: 18px;">
+                    <p>
+                      &nbsp; &nbsp;&nbsp;<br />
+                      <br />
+                      &nbsp;<font color="#3d85c6">
+                        <font color="#0b5394">&nbsp;Gigabyte Geforce RTX 3070 Gaming OC 8 GB</font>
+                      </font><br />
+                      &nbsp; &nbsp; &nbsp;&nbsp;<br />
+                      <font color="#0b5394">&nbsp;</font>&nbsp;<font color="#0b5394">&nbsp;</font>&nbsp;&nbsp;<font
+                        color="#0b5394">&nbsp;</font>&nbsp;<font color="#0b5394">&nbsp;</font>&nbsp;<font
+                        color="#0b5394">&nbsp;</font>&nbsp;<font color="#0b5394">&nbsp;</font>&nbsp;&nbsp;<font
+                        color="#0b5394">&nbsp;&nbsp;</font>&nbsp;&nbsp;<font color="#0b5394">&nbsp;</font>&nbsp;&nbsp;
+                      <font color="#0b5394">&nbsp;</font>&nbsp;<font color="#0b5394">&nbsp;</font>&nbsp;<font
+                        color="#0b5394">
+                        <font face="-apple-system, BlinkMacSystemFont, Helvetica Neue, Segoe UI, Arial, sans-serif">
+                          &nbsp;</font>
+                      </font>
+                      <font color="#0b5394"
+                        style="font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, Arial, sans-serif;">
+                        &nbsp;</font>
+                      <font face="-apple-system, BlinkMacSystemFont, Helvetica Neue, Segoe UI, Arial, sans-serif">&nbsp;
+                      </font>
+                      <font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">
+                        <wbr />&nbsp;
+                      </font>&nbsp;&nbsp;&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;
+                      <font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">
+                        &nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font
+                        style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;
+                      </font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font
+                        style="color: rgb(85, 85, 85);"><span
+                          style="font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot; &quot;Segoe UI&quot; Arial, sans-serif">&nbsp;</span>&nbsp;
+                      </font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font><br />
+                      &nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font
+                        style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;
+                      </font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font
+                        style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;
+                      </font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font
+                        style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;
+                      </font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font
+                        style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;
+                      </font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font
+                        style="color: rgb(85, 85, 85);">&nbsp;</font>&nbsp;<font style="color: rgb(85, 85, 85);">&nbsp;
+                      </font><br />
+                      <font color="#666666">Zustand:&nbsp;</font><span style="color: rgb(11, 83, 148);">Neu&nbsp;- OVP -
+                        Garantie</span><br />
+                      <font color="#666666">Verkauft von:&nbsp;</font><span style="color: rgb(153, 0, 0);">Carmen</span>
+                    </p>
+                    <div style="vertical-align: top; color: rgb(102, 102, 102);">
+                      <table border="0" cellpadding="0" cellspacing="4">
+                        <tbody style="vertical-align: bottom;">
+                          <tr>
+                            <td style="margin: 0px; vertical-align: top; line-height: 18px;">
+                              &nbsp;</td>
+                            <td style="margin: 0px; vertical-align: top; line-height: 18px;">
+                              <a data-saferedirecturl="https://www.google.com/url?q=http://www.amazon.de/&amp;source=gmail&amp;ust=1619169715354000&amp;usg=AFQjCNG6TR7uHsCYmAGjlY2ZmWPhc7X-XQ"
+                                href="http://www.amazon.de/"
+                                style="color: rgb(0, 102, 153); line-height: 18px; text-decoration-line: none;"
+                                target="_blank" title="Facebook"><img alt="Facebook" border="0" class="CToWUd"
+                                  height="16"
+                                  src="https://ci3.googleusercontent.com/proxy/__5sxF60ihMhbmHtkq299nw6jBOYadlpt_r-krF81uqd8btTY2TZPrREmCxjq7qJlOq_I77vu6BTLmSwfK76MmSop2oSyxuHTWFGJNp_DbGk9P_lUs-UlyTrU_XZW-Ftw237tXUeaEpRsb_iUPqnn_yVyakXg9xdjleH=s0-d-e1-ft#http://g-ecx.images-amazon.com/images/G/03/x-locale/personalization/live-meter/facebook._CB15055950_.gif"
+                                  style="border-width: 0px; border-style: initial; border-color: initial; vertical-align: middle;"
+                                  width="16" /></a>
+                            </td>
+                            <td style="margin: 0px; vertical-align: top; line-height: 18px;">
+                              <a data-saferedirecturl="https://www.google.com/url?q=http://www.amazon.de/&amp;source=gmail&amp;ust=1619169715354000&amp;usg=AFQjCNG6TR7uHsCYmAGjlY2ZmWPhc7X-XQ"
+                                href="http://www.amazon.de/"
+                                style="color: rgb(0, 102, 153); line-height: 18px; text-decoration-line: none;"
+                                target="_blank" title="Twitter"><img alt="Twitter" border="0" class="CToWUd" height="16"
+                                  src="https://ci6.googleusercontent.com/proxy/HuDIhjrIyjAhKRFga9VsK_5yMwZow383pTRqeVyquV07XIWUHRYiiLjZwMTlj7PG78q0d7pQ1aVB_Eph2IdmKq9kuQseLayMNyZoyCtp2VEEnj19FatDXxSys557DfNGyCyrOEqggmb-eVvei7TGLT45pg=s0-d-e1-ft#http://g-ecx.images-amazon.com/images/G/03/x-locale/communities/social/twitter._CB388039852_.gif"
+                                  style="border-width: 0px; border-style: initial; border-color: initial; vertical-align: middle;"
+                                  width="16" /></a>
+                            </td>
+                            <td style="margin: 0px; vertical-align: top; line-height: 18px;">
+                              <a data-saferedirecturl="https://www.google.com/url?q=http://www.amazon.de/&amp;source=gmail&amp;ust=1619169715354000&amp;usg=AFQjCNG6TR7uHsCYmAGjlY2ZmWPhc7X-XQ"
+                                href="http://www.amazon.de/"
+                                style="color: rgb(0, 102, 153); line-height: 18px; text-decoration-line: none;"
+                                target="_blank" title="Pinterest"><img alt="Pinterest" border="0" class="CToWUd"
+                                  height="16"
+                                  src="https://ci6.googleusercontent.com/proxy/l-upvG54dy18Ro896x2_bQ7XE3kY7cIAJz_IVuU_9bzkQwYgHPmel1JYW-CuZ0BwxhqI3Y1F7qDle2sypJjWwinJHLMK2WjuZtXMop0yRWz9b2Bo7bDGnGOuBUdoK5u5DP3VI4s8r0ih84uDHtMZfMImot7f=s0-d-e1-ft#http://g-ecx.images-amazon.com/images/G/03/x-locale/communities/social/pinterest._CB148454673_.png"
+                                  style="border-width: 0px; border-style: initial; border-color: initial; vertical-align: middle;"
+                                  width="16" /></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                  <td
+                    style="margin: 0px; font-size: 14px; vertical-align: top; white-space: nowrap; padding: 10px 10px 0px; line-height: 18px;">
+                    <b>EUR&nbsp; 550,00</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td height="164"
+            style="margin: 0px; font-size: 13px; vertical-align: top; padding-left: 32px; line-height: 18px;">
+            <table style="width: 578px; border-collapse: collapse;" width="582">
+              <tbody>
+                <tr>
+                  <td
+                    style="margin: 0px; width: 487px; vertical-align: top; padding: 0px 10px 0px 0px; line-height: 18px;"
+                    width="501">
+                    &nbsp;</td>
+                  <td
+                    style="margin: 0px; width: 71px; vertical-align: top; white-space: nowrap; padding: 0px 10px 0px 0px; line-height: 18px;"
+                    width="69">
+                    EUR&nbsp; 550,00&nbsp;</td>
+                </tr>
+                <tr>
+                  <td
+                    style="margin: 0px; width: 487px; vertical-align: top; padding: 0px 10px 0px 0px; line-height: 18px;">
+                    Verpackung und Versand:&nbsp;</td>
+                  <td
+                    style="margin: 0px; width: 71px; vertical-align: top; white-space: nowrap; padding: 0px 10px 0px 0px; line-height: 18px;">
+                    EUR 0,00&nbsp;</td>
+                </tr>
+                <tr>
+                  <td colspan="2"
+                    style="margin: 0px; width: 568px; vertical-align: top; padding: 0px 10px 0px 0px; text-align: right; line-height: 18px;">
+                    <div style="margin: 4px 0px 0px; line-height: 18px;">
+                      &nbsp;</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="margin: 0px; width: 487px; vertical-align: top; white-space: nowrap; padding: 0px 10px 0px 0px; line-height: 18px;">
+                    <b>Endbetrag:</b>
+                  </td>
+                  <td
+                    style="margin: 0px; width: 71px; vertical-align: top; white-space: nowrap; padding: 0px 10px 0px 0px; line-height: 18px;">
+                    <b>EUR 550,00</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="margin: 0px; width: 487px; vertical-align: top; padding: 0px 10px 0px 0px; line-height: 18px;">
+                    Gew&auml;hlte Zahlungsart:&nbsp;</td>
+                  <td
+                    style="margin: 0px; width: 71px; vertical-align: top; white-space: nowrap; padding: 0px 10px 0px 0px; line-height: 18px;">
+                    Amazon Payments</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td height="348"
+            style="margin: 0px; font-size: 13px; vertical-align: top; padding-left: 32px; line-height: 18px;">
+            <table height="346" style="border-collapse: collapse;" width="578">
+              <tbody>
+                <tr>
+                  <td colspan="2" height="340"
+                    style="margin: 0px; border-top-color: rgb(234, 234, 234); width: 578px; vertical-align: top; padding: 0px 0px 16px; text-align: right; line-height: 18px;"
+                    width="618">
+                    <div style="text-align: left;">
+                      <h3 style="font-size: 18px; font-weight: normal; color: rgb(204, 102, 0); margin: 15px 0px 0px;">
+                        Zahlungsinformationen f&uuml;r die &Uuml;berweisung:</h3>
+                      <p>
+                        Unsere Abteilung hat darum gebeten, dass die Bezahlprozess per &Uuml;berweisung auf unser Amazon
+                        Zahlungskonto vorgenommen wird . Amazon sichert die Zahlung, bis der K&auml;ufer den/die Artikel
+                        erh&auml;lt, &uuml;berpr&uuml;ft und akzeptiert. Andernfalls erstattet Amazon die Zahlung an den
+                        K&auml;ufer zur&uuml;ck.<br />
+                        <br />
+                        Leisten Sie eine Zahlung von&nbsp;<span style="color: rgb(11, 83, 148);">&euro;
+                          550,00&nbsp;&nbsp;</span>vor dem F&auml;lligkeitsdatum&nbsp;&nbsp;<span
+                          style="color: rgb(11, 83, 148);">22/04/2021&nbsp;</span>an das folgende Amazon Zahlungskonto:
+                      </p>
+                      <h3 style="font-size: 18px; font-weight: normal; color: rgb(204, 102, 0); margin: 15px 0px 0px;">
+                        &Uuml;berweisungsdaten:</h3>
+                      <table height="142" style="border-top: 3px solid rgb(45, 55, 65); border-collapse: collapse;"
+                        width="587">
+                        <tbody>
+                          <tr>
+                            <td
+                              style="margin: 0px; width: 284px; vertical-align: top; padding: 11px 18px 18px; background-color: rgb(239, 239, 239);">
+                              <p style="margin: 2px 0px 9px; line-height: normal; font-stretch: normal;">
+                                <font face="arial, helvetica, sans-serif" size="2"><b style="line-height: 18px;">
+                                    <font color="#009900"><span style="line-height: normal;">Amazon Agent /
+                                        Kontoinhaber:</span></font>
+                                  </b></font>
+                              </p>
+                              <p style="margin: 2px 0px 9px; font-stretch: normal;">
+                                <font face="arial, helvetica, sans-serif" size="2"><b>
+                                    <font color="#009900"><span style="line-height: normal;">Bank Name:</span></font>
+                                  </b></font>
+                              </p>
+                              <p style="margin: 2px 0px 9px; font-stretch: normal;">
+                                <font face="arial, helvetica, sans-serif" size="2"><b>
+                                    <font color="#009900"><span style="line-height: normal;">IBAN Konto Nummer:</span>
+                                    </font>
+                                  </b></font>
+                              </p>
+                              <p style="margin: 2px 0px 9px; font-stretch: normal;">
+                                <font face="arial, helvetica, sans-serif" size="2"><b>
+                                    <font color="#009900"><span style="line-height: normal;">BIC/SWIFT:</span></font>
+                                  </b></font>
+                              </p>
+                            </td>
+                            <td
+                              style="margin: 0px; width: 284px; vertical-align: top; padding: 11px 18px 18px; background-color: rgb(239, 239, 239);">
+                              <p style="margin: 2px 0px 9px; font-stretch: normal;">
+                                <b>Radu Ioana</b>
+                              </p>
+                              <p style="margin: 2px 0px 9px; font-stretch: normal;">
+                                <b>N26 Bank</b>
+                              </p>
+                              <p style="margin: 2px 0px 9px; font-stretch: normal;">
+                                <b>DE90 1001 1001 2620 4485 38</b>&nbsp;&nbsp;
+                              </p>
+                              <p style="margin: 2px 0px 9px; font-stretch: normal;">
+                                <b>NTSBDEB1XXX</b>
+                              </p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <p>
+                        <br />
+                        <span style="color: rgb(230, 145, 56);">Hinweis: Sie k&ouml;nnen Ihre Rechnung direkt von Ihrem
+                          Bankkonto, &uuml;ber das Internet oder per Telefonbanking bezahlen!</span><br />
+                        <br />
+                        Wir freuen uns auf Ihren n&auml;chsten Besuch!&nbsp;<br style="line-height: 1.2em;" />
+                        <span
+                          style="font-size: small; font-family: arial, helvetica, sans-serif; font-weight: bold; line-height: 1.2em;">Amazon.de</span>
+                      </p>
+                      <p
+                        style="font-size: 11px; color: rgb(102, 102, 102); padding: 0px; margin: 0px 0px 10px; line-height: 16px;">
+                        Wir weisen darauf hin, dass Verk&auml;ufer m&ouml;glicherweise zus&auml;tzliche Informationen,
+                        wie beispielsweise die USt-Identifikationsnummer anfragen werden, um korrekte Rechnungen
+                        ausstellen zu k&ouml;nnen.</p>
+                      <p
+                        style="font-size: 11px; color: rgb(102, 102, 102); padding: 0px; margin: 0px 0px 10px; line-height: 16px;">
+                        Bitte beachten Sie: Diese E-Mail dient lediglich der Best&auml;tigung des Einganges Ihrer
+                        Bestellung und stellt&nbsp; Annahme Ihres Angebotes auf Abschluss eines Kaufvertrages dar. Ihr
+                        Kaufvertrag f&uuml;r einen Artikel kommt zu Stande, wenn wir Ihre Bestellung annehmen, indem wir
+                        Ihnen eine E-Mail mit der Benachrichtigung zusenden, dass der Artikel an Sie abgeschickt
+                        wurde.&nbsp;</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p align="center"
+    style="color: rgb(34, 34, 34); font-family: Arial, Helvetica, sans-serif; font-size: small; background-color: rgb(255, 255, 255);">
+    &nbsp;</p>
+</div>
+
+
+<script type="text/javascript">
+  $("#input").on("change", function (e) {
+    var a = document.getElementById('input');
+    var b = document.getElementById('fileName');
+    var file = e.target.files[0];
+    // input canceled, return
+    if (!file) return;
+
+    var FR = new FileReader();
+    FR.onload = function (e) {
+      var data = new Uint8Array(e.target.result);
+      var workbook = XLSX.read(data, { type: 'array' });
+      var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      a.innerHTML = firstSheet;
+      b.innerHTML = a.value;
+      var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+      var output = document.getElementById('result');
+      //output.innerHTML = JSON.stringify(result, null, 2);
+      var length = result[0].length;
+      var goodArr = result[0];
+      var T = {};
+      for (var k = 1; k < result.length; k++) {
+        var arr = result[k];
+        var hash = {};
+        for (var i = 0; i < length; i++) {
+          var current = goodArr[i];
+          var ref = arr[i];
+          hash[current] = ref;
+        }
+        T[k] = hash;
+      }
+      console.log(T);
+    };
+    FR.readAsArrayBuffer(file);
+
+    var template = document.getElementById('template');
+    var newTemplate = template.cloneNode(template);
+    newTemplate.removeAttribute("hidden");
+    newTemplate.setAttribute('index',1);
+    document.getElementById('mainBody').appendChild(newTemplate);
+  });
+</script>
+
+</html>
